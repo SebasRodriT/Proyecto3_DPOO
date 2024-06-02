@@ -72,5 +72,32 @@ public class PersistenciaComprador {
         }
         return null;
     }
+    
+    public static Comprador obtenerCompradorPorUsernamePassword(String nombreUser, String pass ) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(PATH_USUARIOS))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Scanner lineScanner = new Scanner(line);
+                lineScanner.useDelimiter("\\|");
+                String nombre = lineScanner.next();
+                long identificacion = lineScanner.nextLong();
+                int edad = lineScanner.nextInt();
+                String nombreUsuario = lineScanner.next();
+                String contraseña = lineScanner.next();
+                String numeroTelefono = lineScanner.next();
+                String correo = lineScanner.next();
+                int saldo = lineScanner.nextInt();
+                
+                if (nombreUsuario ==  nombreUser && contraseña == pass) {
+                    lineScanner.close();
+                    return new Comprador(nombre, identificacion, edad, nombreUsuario, contraseña, numeroTelefono, correo, saldo);
+                }
+                lineScanner.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
