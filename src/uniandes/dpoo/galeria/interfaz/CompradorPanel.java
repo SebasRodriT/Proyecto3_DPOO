@@ -5,6 +5,7 @@
 package uniandes.dpoo.galeria.interfaz;
 
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -135,23 +136,16 @@ public class CompradorPanel extends JPanel {
         jLabel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 840, 110));
 
-        jPanel4.setBackground(new java.awt.Color(137, 164, 185));
+        
 
         jScrollBar1.setBackground(new java.awt.Color(153, 153, 153));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 831, Short.MAX_VALUE)
-                .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
-        );
-
+       
+        //javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+    
+        JPanel catalogo = new PanelImagenTexto();
+        jPanel4 = catalogo;
+        
+        jPanel4.setBackground(new java.awt.Color(137, 164, 185));
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 850, 410));
 
         jPanel5.setBackground(new java.awt.Color(207, 140, 194));
@@ -236,7 +230,7 @@ public class CompradorPanel extends JPanel {
         this.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1391, 698));
         
 
-    
+        //Agregar piezas al catalogo
     }// </editor-fold>                        
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
