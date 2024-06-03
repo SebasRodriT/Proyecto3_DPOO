@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import uniandes.dpoo.galeria.modelo.Pieza;
 import uniandes.dpoo.galeria.modelo.usuario.Comprador;
 
 
@@ -17,6 +18,7 @@ public class VistaPrincipal extends JFrame implements ActionListener{
 	private FormLogin login;
 	private RegisterPanel register;
 	private CompradorPanel comprador;
+	private Pieza pieza;
 	
 	public VistaPrincipal() {
 		vistaTarjetas = new JPanel();
@@ -25,7 +27,7 @@ public class VistaPrincipal extends JFrame implements ActionListener{
 		
 		login = new FormLogin(this, this);
 		register = new RegisterPanel(this);
-		comprador = new CompradorPanel(this);
+		comprador = new CompradorPanel(this, this);
 		
 		vistaTarjetas.add(login, "LOGIN");
 		vistaTarjetas.add(register, "REGISTER");
@@ -34,7 +36,7 @@ public class VistaPrincipal extends JFrame implements ActionListener{
 		
 		
 		
-		this.setSize(500, 500);
+		this.setSize(750, 451);
 		this.setVisible(true);
 		
 	}
@@ -42,8 +44,12 @@ public class VistaPrincipal extends JFrame implements ActionListener{
 	public void cambiarComprador(Comprador comprador) {
 		this.comprador.setComprador(comprador);
 	}
+	
+	public void cambiarPieza(Pieza pieza) {
+		this.comprador.setPieza(pieza);
+	}
 	public static void main(String args[]) {
-		//VistaPrincipal vistaPrincipal = new VistaPrincipal();
+		
 		try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -60,9 +66,7 @@ public class VistaPrincipal extends JFrame implements ActionListener{
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VistaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
+       
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 VistaPrincipal vistaPrincipal = new VistaPrincipal();
@@ -75,5 +79,6 @@ public class VistaPrincipal extends JFrame implements ActionListener{
 		String siguienteVista = e.getActionCommand();
 		CardLayout cl = (CardLayout)(vistaTarjetas.getLayout());
 		cl.show(vistaTarjetas, siguienteVista);
+		pack();
 	}
 }
