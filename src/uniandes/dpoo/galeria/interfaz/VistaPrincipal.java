@@ -7,18 +7,25 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import uniandes.dpoo.galeria.modelo.usuario.Comprador;
 
 
+
+@SuppressWarnings("serial")
 public class VistaPrincipal extends JFrame implements ActionListener{
 	private JPanel vistaTarjetas;
+	private FormLogin login;
+	private RegisterPanel register;
+	private CompradorPanel comprador;
+	
 	public VistaPrincipal() {
 		vistaTarjetas = new JPanel();
 		vistaTarjetas.setLayout(new CardLayout());
 		this.add(vistaTarjetas);
 		
-		FormLogin login = new FormLogin(this);
-		RegisterPanel register = new RegisterPanel();
-		CompradorPanel comprador = new CompradorPanel();
+		login = new FormLogin(this, this);
+		register = new RegisterPanel(this);
+		comprador = new CompradorPanel(this);
 		
 		vistaTarjetas.add(login, "LOGIN");
 		vistaTarjetas.add(register, "REGISTER");
@@ -30,6 +37,10 @@ public class VistaPrincipal extends JFrame implements ActionListener{
 		this.setSize(500, 500);
 		this.setVisible(true);
 		
+	}
+	
+	public void cambiarComprador(Comprador comprador) {
+		this.comprador.setComprador(comprador);
 	}
 	public static void main(String args[]) {
 		//VistaPrincipal vistaPrincipal = new VistaPrincipal();

@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import uniandes.dpoo.galeria.modelo.usuario.Comprador;
@@ -79,18 +81,25 @@ public class PersistenciaComprador {
             while ((line = reader.readLine()) != null) {
                 Scanner lineScanner = new Scanner(line);
                 lineScanner.useDelimiter("\\|");
-                String nombre = lineScanner.next();
-                long identificacion = lineScanner.nextLong();
-                int edad = lineScanner.nextInt();
-                String nombreUsuario = lineScanner.next();
-                String contraseña = lineScanner.next();
-                String numeroTelefono = lineScanner.next();
-                String correo = lineScanner.next();
-                int saldo = lineScanner.nextInt();
-                
-                if (nombreUsuario ==  nombreUser && contraseña == pass) {
-                    lineScanner.close();
-                    return new Comprador(nombre, identificacion, edad, nombreUsuario, contraseña, numeroTelefono, correo, saldo);
+                try {
+                    String nombre = lineScanner.next();
+                    long identificacion = lineScanner.nextLong();
+                    int edad = lineScanner.nextInt();
+                    String nombreUsuario = lineScanner.next();
+                    String contraseña = lineScanner.next();
+                    String numeroTelefono = lineScanner.next();
+                    String correo = lineScanner.next();
+                    int saldo = lineScanner.nextInt();
+                    
+                    if (nombreUsuario.equals(nombreUser) && contraseña.equals(pass)) {
+                        lineScanner.close();
+                        return new Comprador(nombre, identificacion, edad, nombreUsuario, contraseña, numeroTelefono, correo, saldo);
+                    }
+                } catch (InputMismatchException e) {
+                    System.err.println("Error de formato en la línea: " + line);
+                    // Saltar esta línea o maneja el error adecuadamente
+                } catch (NoSuchElementException e) {
+                    System.err.println("Faltan datos en la línea: " + line);
                 }
                 lineScanner.close();
             }
