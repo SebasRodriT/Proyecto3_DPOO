@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
@@ -26,6 +27,8 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 import uniandes.dpoo.galeria.modelo.Pieza;
 import uniandes.dpoo.galeria.modelo.usuario.Comprador;
+import uniandes.dpoo.galeria.persistencia.PersistenciaComprador;
+import uniandes.dpoo.galeria.persistencia.PersistenciaPiezas;
 
 
 @SuppressWarnings("serial")
@@ -58,6 +61,7 @@ public class CompradorPanel extends JPanel {
     private JButton comprarBoton;
     private JButton devolucionBoton;
     private JLabel iconoPerfilLabel;   
+    ArrayList<Pieza> piezasCompradas;
 	
     public CompradorPanel(ActionListener principal, VistaPrincipal padre) {
     	this.padre = padre;
@@ -119,6 +123,7 @@ public class CompradorPanel extends JPanel {
         iconoPerfilLabel = new JLabel();
 
         this.setLayout(new AbsoluteLayout());
+        
         
         panelGeneral.setBackground(new Color(251, 227, 171));
         panelGeneral.setLayout(new AbsoluteLayout());
@@ -313,12 +318,13 @@ public class CompradorPanel extends JPanel {
         comprarBoton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
             	String nombrePieza = JOptionPane.showInputDialog(null, "Por favor, ingresa el nombre de la pieza a comprar:", "Compra de Pieza", JOptionPane.QUESTION_MESSAGE);                    
-                Pieza pieza = comprador.ConsultarPieza(nombrePieza);
+            	Pieza pieza = PersistenciaPiezas.obtenerPiezaPorNombre(nombrePieza);            	
                 boolean vendida = pieza.isVendida();
                 if (pieza != null  && vendida == false ) {
                     comprador.agregarPieza(pieza);
                     comprador.agregarPiezaColeccion(pieza);                
                     JOptionPane.showMessageDialog(null, "¡Compra realizada con éxito!", "Compra Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                    refrescar();
                 } else {
                 	JOptionPane.showMessageDialog(null, "La pieza no se encuentra en el inventario.", "Pieza no encontrada", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -340,14 +346,29 @@ public class CompradorPanel extends JPanel {
                 }
             }
         });
-
+        
+        
+        if (comprador!= null) {
+        	piezasCompradas = comprador.getPiezasCompradas();
+        } else {
+        	 piezasCompradas = new ArrayList<Pieza>(); 
+        }
+        
+        ArrayList<String> nombresPiezas = new ArrayList<String>() ;
+        for (Pieza pieza : piezasCompradas) {
+        	nombresPiezas.add(pieza.getTituloObra());
+        }
+        String [] arregloNombres = new String[nombresPiezas.size()];
+        arregloNombres = nombresPiezas.toArray(arregloNombres);
+        listaPiezasComprador = new JList<String>(arregloNombres);
         listaPiezasComprador.setBackground(new Color(207, 140, 194));
-        listaPiezasComprador.setFont(new Font("Segoe UI", 0, 18)); // NOI18N
-        listaPiezasComprador.setModel(new AbstractListModel<String>() {
-            String[] strings = { "- Pieza 1", "- Pieza 2", "- Pieza 3", "- Pieza 4" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        listaPiezasComprador.setFont(new Font("Segoe UI", 0, 18)); 
+        //listaPiezasComprador.setModel(new AbstractListModel<String>() {
+      
+            //public int getSize() { return arregloNombres.length; }
+           // public String getElementAt(int i) { return strings[i]; }
+        //});
+        
         scrollPane1Piezas.setViewportView(listaPiezasComprador);
 
         GroupLayout jPanel5Layout = new GroupLayout(piezasCompradorPanel);

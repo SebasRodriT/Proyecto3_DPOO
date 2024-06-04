@@ -9,7 +9,7 @@ public class Inventario {
 	private HashMap<String, ArrayList<Pieza>> inventarioArtistas= new HashMap<String, ArrayList<Pieza>>();
 	private static Inventario inventario;
 	
-	private Inventario() {
+	public Inventario() {
 	}
 	
 	public synchronized static Inventario obtenerInstanciaInv() {
