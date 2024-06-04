@@ -40,7 +40,6 @@ public class Inventario {
 
 	public Pieza buscarPieza(String nombrePieza) {
 		for (Pieza nPieza: inventarioPiezas) {
-			System.out.println(nPieza.getTituloObra());
 			if (nPieza.getTituloObra().equalsIgnoreCase(nombrePieza)){
 				return nPieza;
 			}
