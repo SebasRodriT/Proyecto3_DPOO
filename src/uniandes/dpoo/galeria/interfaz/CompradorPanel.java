@@ -302,9 +302,9 @@ public class CompradorPanel extends JPanel {
         	public void actionPerformed(ActionEvent evt) {;
         		String nombrePieza = JOptionPane.showInputDialog(null, "Por favor, ingresa el nombre de la pieza a consultar:", "Consulta de Pieza", JOptionPane.QUESTION_MESSAGE);
         		if (nombrePieza != null && !nombrePieza.isEmpty()) {
-        			Pieza pieza = comprador.ConsultarPieza(nombrePieza);
+        			Pieza pieza = PersistenciaPiezas.obtenerPiezaPorNombre(nombrePieza); 
         			if (pieza != null) {
-        				JOptionPane.showMessageDialog(null, "La pieza consultada es: "+ pieza.toString(), "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        				JOptionPane.showMessageDialog(null, "La pieza consultada es: "+ "Titulo Obra: " + pieza.getTituloObra() + "\n Año: "+ pieza.getAño() + "\n Fecha: " +pieza.getFecha() + "\n Precio: "+ pieza.getPrecio() + "\n Tematica: "+ pieza.getTematica() + "\n Nombre Autor: "+ pieza.getAutor().getNombre(), "Éxito", JOptionPane.INFORMATION_MESSAGE);
         				
         			} else {
         				JOptionPane.showMessageDialog(null, "La pieza no se encuentra en el inventario. ", "Pieza No Encontrada", JOptionPane.INFORMATION_MESSAGE);
@@ -338,6 +338,7 @@ public class CompradorPanel extends JPanel {
                 String nombrePieza = JOptionPane.showInputDialog(null, "Por favor, ingresa el nombre de la pieza a devolver:", "Devolución Pieza", JOptionPane.QUESTION_MESSAGE);
                 
                 Pieza pieza = comprador.ConsultarPieza(nombrePieza);
+                
                 if (pieza != null && comprador.getPiezasCompradas().contains(pieza)) {
                     comprador.solicitarDevolucion(pieza);
                     JOptionPane.showMessageDialog(null, "¡Devolución procesada con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
