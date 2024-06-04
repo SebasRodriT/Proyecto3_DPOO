@@ -1,67 +1,67 @@
 package uniandes.dpoo.galeria.interfaz;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class TableroActividad extends JPanel {
-    private static final int CELL_SIZE = 15;
-    private static final int CELL_GAP = 5;
-    private Map<LocalDate, Integer> activityData;
 
-    public TableroActividad(Map<LocalDate, Integer> activityData) {
-        this.activityData = activityData;
-        setPreferredSize(new Dimension(800, 200));
+public class TableroActividad extends JPanel {
+    private Map<String, Integer> actividadPorMes;
+    private int maxOcurrencias;
+    
+    private static final String[] MESES = {
+        "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+        "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+    };
+
+    public TableroActividad(List<String> fechas) {
+        this.actividadPorMes = new HashMap<>();
+        this.maxOcurrencias = 0;
+        procesarFechas(fechas);
+    }
+
+    private void procesarFechas(List<String> fechas) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        for (String fecha : fechas) {
+            LocalDate date = LocalDate.parse(fecha, formatter);
+            String mes = date.getMonth().name();
+
+            actividadPorMes.put(mes, actividadPorMes.getOrDefault(mes, 0) + 1);
+            maxOcurrencias = Math.max(maxOcurrencias, actividadPorMes.get(mes));
+        }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-
-        LocalDate startDate = LocalDate.of(2023, Month.APRIL, 1);
-        LocalDate endDate = LocalDate.of(2024, Month.APRIL, 1);
-        LocalDate currentDate = startDate;
+        
+        int width = getWidth();
+        int height = getHeight();
+        int boxWidth = width / 12;
+        int boxHeight = height;
 
         int x = 0;
-        int y = 0;
 
-        while (!currentDate.isAfter(endDate)) {
-            int activity = activityData.getOrDefault(currentDate, 0);
-            Color color = getColorForActivity(activity);
+        for (String mes : MESES) {
+            int ocurrencias = actividadPorMes.getOrDefault(mes, 0);
+            float intensidad = maxOcurrencias == 0 ? 0 : (float) ocurrencias / maxOcurrencias;
+            Color color = new Color(0, (int) (255 * intensidad), 0);
+
             g2d.setColor(color);
-            g2d.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+            g2d.fillRect(x, 0, boxWidth, boxHeight);
 
-            currentDate = currentDate.plusDays(1);
-            x += CELL_SIZE + CELL_GAP;
-            if (currentDate.getDayOfWeek().getValue() == 1) {
-                x = 0;
-                y += CELL_SIZE + CELL_GAP;
-            }
+            g2d.setColor(Color.BLACK);
+            g2d.drawRect(x, 0, boxWidth, boxHeight);
+            g2d.drawString(mes.substring(0, 3), x + boxWidth / 2 - g.getFontMetrics().stringWidth(mes.substring(0, 3)) / 2, boxHeight / 2);
+
+            x += boxWidth;
         }
     }
-
-    private Color getColorForActivity(int activity) {
-        if (activity > 10) return new Color(0, 100, 0);
-        else if (activity > 5) return new Color(50, 150, 50);
-        else if (activity > 0) return new Color(100, 200, 100);
-        else return new Color(200, 200, 200);
-    }
-
-    public static void main(String[] args) {
-        Map<LocalDate, Integer> activityData = new HashMap<>();
-        for (int i = 0; i < 365; i++) {
-            activityData.put(LocalDate.of(2023, Month.APRIL, 1).plusDays(i), (int) (Math.random() * 15));
-        }
-
-        JFrame frame = new JFrame("Activity Chart");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new TableroActividad(activityData));
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
+  
 }
