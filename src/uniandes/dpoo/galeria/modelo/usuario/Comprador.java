@@ -16,9 +16,9 @@ public class Comprador extends Usuario {
     private String numeroTelefono;
     private String correo;
     private int valorMaxCompras;
-    private ArrayList<Pieza> piezasCompradas;
+    private ArrayList<Pieza> piezasCompradas = new ArrayList<Pieza>();
     private HashMap<Pieza, String> listapieza;
-    private ArrayList<Pieza> coleccion;
+    private ArrayList<Pieza> coleccion = new ArrayList<Pieza>();
     private int saldo;
     private Plataforma plataforma;
     private AdministradorGaleria admin;
@@ -125,7 +125,10 @@ public class Comprador extends Usuario {
     }
     
     public Pieza ConsultarPieza(String nombre) {
-    	return inventarioGaleria.buscarPieza(nombre);
+    	
+    	Pieza pieza = inventarioGaleria.buscarPieza(nombre);
+    	System.out.println(pieza);
+    	return pieza;
     }
 
     }

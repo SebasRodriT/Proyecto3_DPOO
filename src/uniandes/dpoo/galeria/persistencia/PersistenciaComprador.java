@@ -97,7 +97,7 @@ public class PersistenciaComprador {
                     }
                 } catch (InputMismatchException e) {
                     System.err.println("Error de formato en la línea: " + line);
-                    // Saltar esta línea o maneja el error adecuadamente
+                    
                 } catch (NoSuchElementException e) {
                     System.err.println("Faltan datos en la línea: " + line);
                 }

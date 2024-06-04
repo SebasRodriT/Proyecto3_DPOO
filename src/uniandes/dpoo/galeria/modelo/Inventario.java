@@ -9,7 +9,7 @@ public class Inventario {
 	private HashMap<String, ArrayList<Pieza>> inventarioArtistas= new HashMap<String, ArrayList<Pieza>>();
 	private static Inventario inventario;
 	
-	private Inventario() {
+	public Inventario() {
 	}
 	
 	public synchronized static Inventario obtenerInstanciaInv() {
@@ -40,6 +40,7 @@ public class Inventario {
 
 	public Pieza buscarPieza(String nombrePieza) {
 		for (Pieza nPieza: inventarioPiezas) {
+			System.out.println(nPieza.getTituloObra());
 			if (nPieza.getTituloObra().equalsIgnoreCase(nombrePieza)){
 				return nPieza;
 			}

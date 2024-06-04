@@ -1,0 +1,10 @@
+false|La Mona Lisa|1503|Florencia|Leonardo da Vinci|Renacimiento|false|Retrato|780000000
+false|La Última Cena|1498|Milán|Leonardo da Vinci|Renacimiento|true|Religión|450000000
+false|La noche estrellada|1889|Saint-Rémy-de-Provence|Vincent van Gogh|Postimpresionismo|true|Paisaje|100000000
+false|El Grito|1893|Oslo|Edvard Munch|Expresionismo|false|Expresionismo|120000000
+false|La persistencia de la memoria|1931|Nueva York|Salvador Dalí|Surrealismo|true|Surrealismo|150000000
+false|Guernica|1937|París|Pablo Picasso|Cubismo|false|Guerra|200000000
+false|Impression, Sunrise|1872|Le Havre|Claude Monet|Impresionismo|false|Marina|110000000
+false|Las Meninas|1656|Madrid|Diego Velázquez|Barroco|false|Retrato|700000000
+false|La joven de la perla|1665|Delft|Johannes Vermeer|Barroco|false|Retrato|130000000
+false|El jardín de las delicias|1500|Bruselas|Hieronymus Bosch|Renacimiento|true|Religión|200000000
