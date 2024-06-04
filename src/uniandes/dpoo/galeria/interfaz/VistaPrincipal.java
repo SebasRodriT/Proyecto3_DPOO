@@ -19,6 +19,7 @@ public class VistaPrincipal extends JFrame implements ActionListener{
 	private RegisterPanel register;
 	private CompradorPanel comprador;
 	private Pieza pieza;
+	private AdminPanel admin;
 	
 	public VistaPrincipal() {
 		vistaTarjetas = new JPanel();
@@ -28,10 +29,12 @@ public class VistaPrincipal extends JFrame implements ActionListener{
 		login = new FormLogin(this, this);
 		register = new RegisterPanel(this);
 		comprador = new CompradorPanel(this, this);
+		admin = new AdminPanel(this);
 		
 		vistaTarjetas.add(login, "LOGIN");
 		vistaTarjetas.add(register, "REGISTER");
 		vistaTarjetas.add(comprador, "COMPRADOR");
+		vistaTarjetas.add(admin, "ADMINISTRADOR");
 		
 		
 		
@@ -48,6 +51,7 @@ public class VistaPrincipal extends JFrame implements ActionListener{
 	public void cambiarPieza(Pieza pieza) {
 		this.comprador.setPieza(pieza);
 	}
+	
 	public static void main(String args[]) {
 		
 		try {

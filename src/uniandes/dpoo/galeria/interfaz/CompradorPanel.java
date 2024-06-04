@@ -34,6 +34,7 @@ public class CompradorPanel extends JPanel {
 	private Comprador comprador;
 	private ActionListener principal;
 	private Pieza pieza;
+	private AdminPanel admin;
 	private VistaPrincipal padre;
 	private JButton comprar;
     private JLabel perfilLabel;
@@ -78,6 +79,11 @@ public class CompradorPanel extends JPanel {
     
     public void setPieza(Pieza pieza) {
     	this.pieza = pieza;
+    	refrescar();    
+    }
+    
+    public void setAdmin(AdminPanel admin) {
+    	this.admin = admin;
     	refrescar();    
     }
     

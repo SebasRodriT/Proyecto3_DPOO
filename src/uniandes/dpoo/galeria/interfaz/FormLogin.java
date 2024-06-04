@@ -145,9 +145,12 @@ public class FormLogin extends JPanel {
 
             	try {
             		Comprador comprador = PersistenciaComprador.obtenerCompradorPorUsernamePassword(user, pass);
-            		if (comprador == null) {
+            		if (user.equals("admin") && pass.equals("admin123")) {
+            			signUp.setActionCommand("ADMINISTRADOR");
+            			signUp.addActionListener(listener);            			
+            		} else if (comprador == null) {
             			JOptionPane.showMessageDialog(null, "Username o password incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
-            		} else 
+            		} else
             			signUp.setActionCommand("COMPRADOR");
             			signUp.addActionListener(listener);
             			padre.cambiarComprador(comprador);

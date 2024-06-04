@@ -40,8 +40,10 @@ public class AdminPanel extends JPanel {
     private JPanel jPanel4;
     private JPanel jPanel5;
     private JPanel jPanel6;
+    private ActionListener principal;
     
-    public AdminPanel() {
+    public AdminPanel(ActionListener principal) {
+    	this.principal = principal;
         initComponents();
     }
 
