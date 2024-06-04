@@ -1,6 +1,5 @@
 package uniandes.dpoo.galeria.interfaz;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
@@ -9,11 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class TableroActividad extends JPanel {
-    private Map<String, Integer> actividadPorMes;
+    private final Map<String, Integer> actividadPorMes;
     private int maxOcurrencias;
-    
     private static final String[] MESES = {
         "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
         "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
@@ -36,10 +33,25 @@ public class TableroActividad extends JPanel {
         }
     }
 
+    private Color determinarColor(int ocurrencias) {
+        if (ocurrencias == 0) {
+            return new Color(235, 235, 235); 
+        } else if (ocurrencias <= maxOcurrencias * 0.2) {
+            return new Color(200, 255, 200); 
+        } else if (ocurrencias <= maxOcurrencias * 0.4) {
+            return new Color(150, 255, 150); 
+        } else if (ocurrencias <= maxOcurrencias * 0.6) {
+            return new Color(100, 255, 100); 
+        } else if (ocurrencias <= maxOcurrencias * 0.8) {
+            return new Color(50, 255, 50); 
+        } else {
+            return new Color(0, 255, 0); 
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
         
         int width = getWidth();
         int height = getHeight();
@@ -50,18 +62,17 @@ public class TableroActividad extends JPanel {
 
         for (String mes : MESES) {
             int ocurrencias = actividadPorMes.getOrDefault(mes, 0);
-            float intensidad = maxOcurrencias == 0 ? 0 : (float) ocurrencias / maxOcurrencias;
-            Color color = new Color(0, (int) (255 * intensidad), 0);
+            Color color = determinarColor(ocurrencias);
 
-            g2d.setColor(color);
-            g2d.fillRect(x, 0, boxWidth, boxHeight);
+            g.setColor(color);
+            g.fillRect(x, 0, boxWidth, boxHeight);
 
-            g2d.setColor(Color.BLACK);
-            g2d.drawRect(x, 0, boxWidth, boxHeight);
-            g2d.drawString(mes.substring(0, 3), x + boxWidth / 2 - g.getFontMetrics().stringWidth(mes.substring(0, 3)) / 2, boxHeight / 2);
+            g.setColor(Color.BLACK);
+            g.drawRect(x, 0, boxWidth, boxHeight);
+            g.drawString(mes.substring(0, 3), x + boxWidth / 2 - g.getFontMetrics().stringWidth(mes.substring(0, 3)) / 2, boxHeight / 2);
 
             x += boxWidth;
         }
     }
-  
+
 }
