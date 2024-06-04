@@ -5,12 +5,16 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -82,11 +86,8 @@ public class AdminPanel extends JPanel {
         bienvenidaLabel = new JLabel();
         jPanel5 = new JPanel();
         tableroActividadesBoton = new JButton();
-        consultarPiezaBoton = new JButton();
         agregarPiezaBoton = new JButton();
-        historiaCompradorBoton = new JButton();
-        consultarArtistaBoton = new JButton();
-
+       
         this.setLayout(new AbsoluteLayout());
 
         jPanel1.setBackground(new Color(251, 227, 171));
@@ -208,18 +209,71 @@ public class AdminPanel extends JPanel {
         tableroActividadesBoton.setText("Tablero Actividades");
         tableroActividadesBoton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+            	
+            	 List<String> fechas = new ArrayList<>();
+            	 //fechas simuladas
+                 fechas.add("2024-01-01");
+                 fechas.add("2024-02-15");
+                 fechas.add("2023-06-01");
+                 fechas.add("2023-06-15");
+                 fechas.add("2023-06-30");
+                 fechas.add("2023-07-05");
+                 fechas.add("2023-07-20");
+                 fechas.add("2023-07-31");
+                 fechas.add("2023-08-10");
+                 fechas.add("2023-08-25");
+                 fechas.add("2023-08-31");
+                 fechas.add("2023-09-05");
+                 fechas.add("2023-09-20");
+                 fechas.add("2023-09-30");
+                 fechas.add("2023-10-10");
+                 fechas.add("2023-10-25");
+                 fechas.add("2023-10-31");
+                 fechas.add("2023-11-05");
+                 fechas.add("2023-11-20");
+                 fechas.add("2023-11-30");
+                 fechas.add("2023-12-10");
+                 fechas.add("2023-12-25");
+                 fechas.add("2023-12-25");
+                 fechas.add("2023-12-25");
+                 fechas.add("2023-12-25");
+                 fechas.add("2023-12-31");
+                 fechas.add("2024-01-01");
+                 fechas.add("2024-01-15");
+                 fechas.add("2024-01-31");
+                 fechas.add("2024-02-10");
+                 fechas.add("2024-02-25");
+                 fechas.add("2024-02-29");
+                 fechas.add("2024-03-05");
+                 fechas.add("2024-03-20");
+                 fechas.add("2024-04-15");
+                 fechas.add("2024-04-16");
+                 fechas.add("2024-05-30");
+                 TableroActividad tableroActividad = new TableroActividad(fechas);
+                
+                 JDialog dialog = new JDialog();
+                 dialog.setTitle("Tablero de Actividad");
+                 dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                 dialog.getContentPane().add(tableroActividad);
+                 dialog.pack();
+                 dialog.setSize(600, 600);
+                 dialog.setLocationRelativeTo(null); 
+                 dialog.setVisible(true);
                 
             }
         });
+        
+        agregarPiezaBoton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	
+            
+            
+            }});
+        
+        
 
-        consultarPiezaBoton.setFont(new Font("Segoe UI Semibold", 0, 14));
-        consultarPiezaBoton.setText("Consultar Pieza");
-        consultarPiezaBoton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                
-            }
-        });
-
+       
         agregarPiezaBoton.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); 
         agregarPiezaBoton.setText("Agregar Pieza");
         agregarPiezaBoton.addActionListener(new ActionListener() {
@@ -444,24 +498,15 @@ public class AdminPanel extends JPanel {
                 }
             }
         });
+        
+        
+        
               
            
 
-        historiaCompradorBoton.setFont(new Font("Segoe UI Semibold", 0, 14)); 
-        historiaCompradorBoton.setText("Historia Comprador");
-        historiaCompradorBoton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                
-            }
-        });
+  
 
-        consultarArtistaBoton.setFont(new Font("Segoe UI Semibold", 0, 14));
-        consultarArtistaBoton.setText("Consultar Artista");
-        consultarArtistaBoton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                
-            }
-        });
+      
 
         javax.swing.GroupLayout jPanel5Layout = new GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -481,26 +526,19 @@ public class AdminPanel extends JPanel {
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                    .addComponent(consultarArtistaBoton)
-                                    .addComponent(consultarPiezaBoton))))
+                                   )))
                         .addGap(0, 10, Short.MAX_VALUE))
                     .addGroup(GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(historiaCompradorBoton, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
+                        
+        ))));
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(tableroActividadesBoton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addComponent(consultarPiezaBoton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(consultarArtistaBoton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addComponent(historiaCompradorBoton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                
+                
                 .addComponent(agregarPiezaBoton, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45))
         );
