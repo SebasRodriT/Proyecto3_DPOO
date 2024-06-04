@@ -29,7 +29,7 @@ public class VistaPrincipal extends JFrame implements ActionListener{
 		login = new FormLogin(this, this);
 		register = new RegisterPanel(this);
 		comprador = new CompradorPanel(this, this);
-		admin = new AdminPanel(this);
+		admin = new AdminPanel(this, this);
 		
 		vistaTarjetas.add(login, "LOGIN");
 		vistaTarjetas.add(register, "REGISTER");

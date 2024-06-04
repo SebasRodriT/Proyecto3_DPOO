@@ -2,6 +2,7 @@ package uniandes.dpoo.galeria.interfaz;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,8 +10,11 @@ import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
@@ -18,6 +22,15 @@ import javax.swing.border.SoftBevelBorder;
 
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
+
+import uniandes.dpoo.galeria.modelo.Artista;
+import uniandes.dpoo.galeria.modelo.Dibujo;
+import uniandes.dpoo.galeria.modelo.Escultura;
+import uniandes.dpoo.galeria.modelo.Fotografia;
+import uniandes.dpoo.galeria.modelo.Impresion;
+import uniandes.dpoo.galeria.modelo.Pintura;
+import uniandes.dpoo.galeria.modelo.Video;
+import uniandes.dpoo.galeria.modelo.empleado.AdministradorGaleria;
 
 @SuppressWarnings("serial")
 public class AdminPanel extends JPanel {
@@ -41,10 +54,16 @@ public class AdminPanel extends JPanel {
     private JPanel jPanel5;
     private JPanel jPanel6;
     private ActionListener principal;
+    private VistaPrincipal padre;
+    private AdministradorGaleria administrador;
+    private PanelImagenTexto catalogo = new PanelImagenTexto();
     
-    public AdminPanel(ActionListener principal) {
+    public AdminPanel(ActionListener principal, VistaPrincipal nVista) {
     	this.principal = principal;
-        initComponents();
+    	this.padre = nVista;
+    	this.administrador = AdministradorGaleria.obternerAdmin();
+    	initComponents();
+    	
     }
 
                    
@@ -153,17 +172,7 @@ public class AdminPanel extends JPanel {
         jPanel1.add(galeriaLabel, new AbsoluteConstraints(240, 20, 840, 110));
 
         jPanel4.setBackground(new Color(137, 164, 185));
-
-        javax.swing.GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
-        );
+        jPanel4 = catalogo;
 
         jPanel1.add(jPanel4, new AbsoluteConstraints(240, 150, 850, 410));
 
@@ -218,6 +227,225 @@ public class AdminPanel extends JPanel {
                 
             }
         });
+        
+        agregarPiezaBoton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	JPanel panelArtista = new JPanel(new GridLayout(0, 2));
+                JTextField nombreArtistaField = new JTextField();
+                JTextField tipoArtistaField = new JTextField();
+                panelArtista.add(new JLabel("Nombre del artista:"));
+                panelArtista.add(nombreArtistaField);
+                panelArtista.add(new JLabel("Tipo/especialidad del artista (ej: pintor):"));
+                panelArtista.add(tipoArtistaField);
+
+                int result = JOptionPane.showConfirmDialog(null, panelArtista, 
+                    "Registrar Artista", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                
+                if (result == JOptionPane.OK_OPTION) {
+                    String nombreArtista = nombreArtistaField.getText();
+                    String tipoArtista = tipoArtistaField.getText();
+                    Artista artista = new Artista(nombreArtista, tipoArtista);
+
+                    String[] opciones = { "Dibujo", "Escultura", "Fotografía", "Impresión", "Pintura" };
+                    JComboBox<String> comboBox = new JComboBox<>(opciones);
+
+                    JPanel panelPieza = new JPanel(new GridLayout(0, 1));
+                    panelPieza.add(new JLabel("Seleccione el tipo de pieza:"));
+                    panelPieza.add(comboBox);
+
+                    int resultPieza = JOptionPane.showConfirmDialog(null, panelPieza, 
+                        "Seleccionar Tipo de Pieza", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+                    if (resultPieza == JOptionPane.OK_OPTION) {
+                        String opcionSeleccionada = (String) comboBox.getSelectedItem();
+                        JPanel panelDetallesPieza = new JPanel(new GridLayout(0, 2));
+                        JTextField tituloField = new JTextField();
+                        JTextField anioField = new JTextField();
+                        JTextField lugarField = new JTextField();
+                        JTextField tematicaField = new JTextField();
+                        JTextField precioField = new JTextField();
+                        JTextField imagenField = new JTextField();
+
+                        panelDetallesPieza.add(new JLabel("Título de la pieza:"));
+                        panelDetallesPieza.add(tituloField);
+                        panelDetallesPieza.add(new JLabel("Año de creación/publicación:"));
+                        panelDetallesPieza.add(anioField);
+                        panelDetallesPieza.add(new JLabel("Lugar de creación/publicación:"));
+                        panelDetallesPieza.add(lugarField);
+                        panelDetallesPieza.add(new JLabel("Temática:"));
+                        panelDetallesPieza.add(tematicaField);
+                        panelDetallesPieza.add(new JLabel("Valor/precio:"));
+                        panelDetallesPieza.add(precioField);
+                        panelDetallesPieza.add(new JLabel("Nombre del archivo de la imagen:"));
+                        panelDetallesPieza.add(imagenField);
+
+                        if (opcionSeleccionada.equals("Dibujo")) {
+                            JTextField tecnicaField = new JTextField();
+                            JTextField estiloField = new JTextField();
+                            JTextField medioField = new JTextField();
+                            JTextField tamanoField = new JTextField();
+
+                            panelDetallesPieza.add(new JLabel("Técnica:"));
+                            panelDetallesPieza.add(tecnicaField);
+                            panelDetallesPieza.add(new JLabel("Estilo:"));
+                            panelDetallesPieza.add(estiloField);
+                            panelDetallesPieza.add(new JLabel("Medio (ej: lienzo):"));
+                            panelDetallesPieza.add(medioField);
+                            panelDetallesPieza.add(new JLabel("Tamaño (m x n):"));
+                            panelDetallesPieza.add(tamanoField);
+
+                            int resultDibujo = JOptionPane.showConfirmDialog(null, panelDetallesPieza, 
+                                "Detalles del Dibujo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+                            if (resultDibujo == JOptionPane.OK_OPTION) {
+                                String titulo = tituloField.getText();
+                                int anio = Integer.parseInt(anioField.getText());
+                                String lugar = lugarField.getText();
+                                String tematica = tematicaField.getText();
+                                int precio = Integer.parseInt(precioField.getText());
+                                String imagen = imagenField.getText();
+                                String tecnica = tecnicaField.getText();
+                                String estilo = estiloField.getText();
+                                String medio = medioField.getText();
+                                String tamano = tamanoField.getText();
+
+                                Dibujo dibujo = new Dibujo(medio, tecnica, estilo, tamano, false, titulo, anio, lugar, artista, false, tematica, precio);
+                                administrador.registrarPiezaInventario(dibujo);
+                                System.out.println("Pieza ingresada exitosamente al inventario");
+                            }
+                        } else if (opcionSeleccionada.equals("Escultura")) {
+                            JTextField alturaField = new JTextField();
+                            JTextField anchoField = new JTextField();
+                            JTextField pesoField = new JTextField();
+                            JTextField electricidadField = new JTextField();
+
+                            panelDetallesPieza.add(new JLabel("Altura:"));
+                            panelDetallesPieza.add(alturaField);
+                            panelDetallesPieza.add(new JLabel("Ancho:"));
+                            panelDetallesPieza.add(anchoField);
+                            panelDetallesPieza.add(new JLabel("Peso:"));
+                            panelDetallesPieza.add(pesoField);
+                            panelDetallesPieza.add(new JLabel("¿Requiere electricidad? (true/false):"));
+                            panelDetallesPieza.add(electricidadField);
+
+                            int resultEscultura = JOptionPane.showConfirmDialog(null, panelDetallesPieza, 
+                                "Detalles de la Escultura", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+                            if (resultEscultura == JOptionPane.OK_OPTION) {
+                                String titulo = tituloField.getText();
+                                int anio = Integer.parseInt(anioField.getText());
+                                String lugar = lugarField.getText();
+                                String tematica = tematicaField.getText();
+                                int precio = Integer.parseInt(precioField.getText());
+                                String imagen = imagenField.getText();
+                                double altura = Double.parseDouble(alturaField.getText());
+                                double ancho = Double.parseDouble(anchoField.getText());
+                                double peso = Double.parseDouble(pesoField.getText());
+                                boolean electricidad = Boolean.parseBoolean(electricidadField.getText());
+
+                                Escultura escultura = new Escultura(altura, ancho, peso, electricidad, false, titulo, anio, lugar, artista, false, tematica, precio);
+                                administrador.registrarPiezaInventario(escultura);
+                                System.out.println("Pieza ingresada exitosamente al inventario");
+                            }
+                        } else if (opcionSeleccionada.equals("Fotografía")) {
+                            JTextField calidadField = new JTextField();
+                            JTextField colorField = new JTextField();
+
+                            panelDetallesPieza.add(new JLabel("Calidad (m x n):"));
+                            panelDetallesPieza.add(calidadField);
+                            panelDetallesPieza.add(new JLabel("¿A color? (true/false):"));
+                            panelDetallesPieza.add(colorField);
+
+                            int resultFotografia = JOptionPane.showConfirmDialog(null, panelDetallesPieza, 
+                                "Detalles de la Fotografía", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+                            if (resultFotografia == JOptionPane.OK_OPTION) {
+                                String titulo = tituloField.getText();
+                                int anio = Integer.parseInt(anioField.getText());
+                                String lugar = lugarField.getText();
+                                String tematica = tematicaField.getText();
+                                int precio = Integer.parseInt(precioField.getText());
+                                String imagen = imagenField.getText();
+                                String calidad = calidadField.getText();
+                                boolean color = Boolean.parseBoolean(colorField.getText());
+
+                                Fotografia fotografia = new Fotografia(calidad, color, false, titulo, anio, lugar, artista, false, tematica, precio);
+                                administrador.registrarPiezaInventario(fotografia);
+                                System.out.println("Pieza ingresada exitosamente al inventario");
+                            }
+                        } else if (opcionSeleccionada.equals("Impresión")) {
+                            JTextField tipoImpresionField = new JTextField();
+                            JTextField calidadField = new JTextField();
+                            JTextField tamanoField = new JTextField();
+
+                            panelDetallesPieza.add(new JLabel("Tipo de impresión:"));
+                            panelDetallesPieza.add(tipoImpresionField);
+                            panelDetallesPieza.add(new JLabel("Calidad / DPI (puntos por pulgada):"));
+                            panelDetallesPieza.add(calidadField);
+                            panelDetallesPieza.add(new JLabel("Tamaño (m x n):"));
+                            panelDetallesPieza.add(tamanoField);
+
+                            int resultImpresion = JOptionPane.showConfirmDialog(null, panelDetallesPieza, 
+                                "Detalles de la Impresión", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+                            if (resultImpresion == JOptionPane.OK_OPTION) {
+                                String titulo = tituloField.getText();
+                                int anio = Integer.parseInt(anioField.getText());
+                                String lugar = lugarField.getText();
+                                String tematica = tematicaField.getText();
+                                int precio = Integer.parseInt(precioField.getText());
+                                String imagen = imagenField.getText();
+                                String tipoImpresion = tipoImpresionField.getText();
+                                String calidad = calidadField.getText();
+                                String tamano = tamanoField.getText();
+
+                                Impresion impresion = new Impresion(tipoImpresion, calidad, tamano, false, titulo, anio, lugar, artista, false, tematica, precio);
+                                administrador.registrarPiezaInventario(impresion);
+                                System.out.println("Pieza ingresada exitosamente al inventario");
+                            }
+                        } else if (opcionSeleccionada.equals("Pintura")) {
+                            JTextField tecnicaField = new JTextField();
+                            JTextField estiloField = new JTextField();
+                            JTextField alturaField = new JTextField();
+                            JTextField anchoField = new JTextField();
+
+                            panelDetallesPieza.add(new JLabel("Técnica:"));
+                            panelDetallesPieza.add(tecnicaField);
+                            panelDetallesPieza.add(new JLabel("Estilo:"));
+                            panelDetallesPieza.add(estiloField);
+                            panelDetallesPieza.add(new JLabel("Altura:"));
+                            panelDetallesPieza.add(alturaField);
+                            panelDetallesPieza.add(new JLabel("Ancho:"));
+                            panelDetallesPieza.add(anchoField);
+
+                            int resultPintura = JOptionPane.showConfirmDialog(null, panelDetallesPieza, 
+                                "Detalles de la Pintura", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+                            if (resultPintura == JOptionPane.OK_OPTION) {
+                                String titulo = tituloField.getText();
+                                int anio = Integer.parseInt(anioField.getText());
+                                String lugar = lugarField.getText();
+                                String tematica = tematicaField.getText();
+                                int precio = Integer.parseInt(precioField.getText());
+                                String imagen = imagenField.getText();
+                                String tecnica = tecnicaField.getText();
+                                String estilo = estiloField.getText();
+                                double altura = Double.parseDouble(alturaField.getText());
+                                double ancho = Double.parseDouble(anchoField.getText());
+
+                                Pintura pintura = new Pintura(tecnica, estilo, altura, ancho, false, titulo, anio, lugar, artista, false, tematica, precio);
+                                administrador.registrarPiezaInventario(pintura);
+                                System.out.println("Pieza ingresada exitosamente al inventario");
+                            }
+                        
+                        }
+                    }
+                }
+            }
+        });
+              
+           
 
         historiaCompradorBoton.setFont(new Font("Segoe UI Semibold", 0, 14)); 
         historiaCompradorBoton.setText("Historia Comprador");
